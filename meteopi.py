@@ -309,6 +309,7 @@ FSM = 1
 while True:
     now = datetime.datetime.now()
     strnow = now.strftime("%d-%m-%Y %H:%M")
+    print_values()  
     
     if FSM == 1:
         mutex = 1
@@ -336,4 +337,3 @@ while True:
     counter=(counter+1)%60
     print(str(60-counter)+" minutes to next measure.")
     sleep(60)
-    print_values()  
