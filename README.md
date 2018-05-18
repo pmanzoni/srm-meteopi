@@ -1,8 +1,6 @@
-# srm-meteopi
-Trabajo de asignatura de Sistemas Basados en Redes Móviles del Master de Ingeniería de Computadores y Redes en la Universidad Politécnica de Valencia
+# MeteoPi with MQTT
+> was: srm-meteopi
 
-Academic work for Systems Based On Mobile Networks from the Computer Engineering and Networking Master at Universitat Politécnica de Valencia
+Based on student project  for Systems Based On Mobile Networks from the Computer Engineering and Networking Master at Universitat Politécnica de Valencia. Author: David Baselga-Masia. Project Memory: https://www.sharelatex.com/read/rmwcvwtpmwxj
 
-Project Memory: https://www.sharelatex.com/read/rmwcvwtpmwxj
-
-Author: David Baselga-Masia
+Addedd connction through MQTT with Ubidots
