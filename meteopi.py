@@ -4,7 +4,7 @@ from time import sleep
 from random import randint
 import datetime
 
-sense = SenseHat()
+import paho.mqtt.client as mqtt
 
 r = (153,0,0)
 b = (0,0,153)
@@ -280,23 +280,41 @@ def show_forecast(d,m):
     return;
 
 def print_values():
-    print("temperature: "+str(round(sense.get_temperature(),2))+" C")
+    temp = round(sense.get_temperature(),2)
+    pres = round(sense.get_pressure(),2)
+    humi = round(sense.get_humidity(),2)
+    orie = sense.get_orientation()
+    pitc = orie["pitch"]
+    roll = orie["roll"]
+    yaw  = orie["yaw"]
+    print("Current values:")
+    print("Temperature: "+str(round(sense.get_temperature(),2))+" C")
     print("Pressure: "+str(round(sense.get_pressure(),2))+" Millibars")
     print("Humidity: "+str(round(sense.get_humidity(),2))+" %")
-    o = sense.get_orientation()
-    pitch = o["pitch"]
-    roll = o["roll"]
-    yaw = o["yaw"]
-    print("pitch {0} roll {1} yaw {2}".format(pitch,roll,yaw))
+    print("pitch {0} roll {1} yaw {2}".format(pitc,roll,yaw))
+
+    mqttc.loop_start()
+
+    mqttc.publish("/v1.6/devices/meteopi/humidity", humi)
+    mqttc.publish("/v1.6/devices/meteopi/pressure", pres)
+    mqttc.publish("/v1.6/devices/meteopi/temperature", temp)
+
+    mqttc.loop_stop()
 
 
+#init
+
+sense = SenseHat()
+
+mqttc=mqtt.Client()
+mqttc.username_pw_set("A1E-2DvBgZQEk20FsdZTsjaOcG4SRuTkgH", password=None)
+mqttc.connect("things.ubidots.com", 1883, 60)
 
 sense.stick.direction_left = left
 sense.stick.direction_right = right
 sense.stick.direction_middle = OK
 sense.stick.direction_up = sense.clear
 
-#init
 measurements = 0
 counter = 0
 #sense.show_message("Welcome to meteopi, use the joystick to navigate. Forecasting will take several hours to start showing reliable data.",scroll_speed=0.05)
