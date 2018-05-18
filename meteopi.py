@@ -279,6 +279,18 @@ def show_forecast(d,m):
         show_clouds_sun()
     return;
 
+def print_values():
+    print("temperature: "+str(round(sense.get_temperature(),2))+" C")
+    print("Pressure: "+str(round(sense.get_pressure(),2))+" Millibars")
+    print("Humidity: "+str(round(sense.get_humidity(),2))+" %")
+    o = sense.get_orientation()
+    pitch = o["pitch"]
+    roll = o["roll"]
+    yaw = o["yaw"]
+    print("pitch {0} roll {1} yaw {2}".format(pitch,roll,yaw))
+
+
+
 sense.stick.direction_left = left
 sense.stick.direction_right = right
 sense.stick.direction_middle = OK
@@ -306,6 +318,7 @@ while True:
         mutex = 0
     
     if counter%60 == 0:
+
         if measurements < 24:
             data[measurements] = sense.get_pressure()*0.0295301
             print(str(data[measurements])+" inches, incomplete set")
@@ -323,3 +336,4 @@ while True:
     counter=(counter+1)%60
     print(str(60-counter)+" minutes to next measure.")
     sleep(60)
+    print_values()  
